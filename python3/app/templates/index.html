@@ -176,12 +176,6 @@
                             <div class="tab-pane fade in active" id="tab1default">
                                 <div class="container">                                
                                     <section id="searchresults" class="col-xs-12 col-sm-6 col-md-12">
-                                    <!-- <article class="search-result row">
-                                      <div class="col-xs-12 col-sm-12 col-md-7">
-                                        <h3><a href="#" title="">Title</a></h3>
-                                        <p>Description</p>
-                                      </div>
-                                    </article> -->
                                   </section>
                                 </div>
                               </div>
@@ -225,9 +219,10 @@
       // useful for exploring from browser developer tools
       console.log('The Summon API response has been stored as the JSON object "data":');
       console.log(data);
+      // populate JSON Response section
       var str = JSON.stringify(data, undefined, 4);
       $('#json').html(syntaxHighlight(str));
-
+      // populate Search Results section
       for (var i=0;i<data.documents.length;i++){
         var result = data.documents[i];
         var article = '<article class="search-result row">' +

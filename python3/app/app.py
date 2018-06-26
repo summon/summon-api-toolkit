@@ -19,11 +19,14 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    # Search parameters from URL parameters
     if request.method == 'GET' and len(request.args) != 0:
         # cannot use to_dict like POST since multiple s.fvf would be dropped
         params = [(k, v) for k, v in request.args.items(multi=True)]
+    # Search parameters from HTML form
     elif request.method == 'POST':
         params = request.form.to_dict()
+    # No search has been performed yet, return blank template
     else:
         return render_template('index.html')
 
