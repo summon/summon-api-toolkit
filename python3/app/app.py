@@ -8,7 +8,8 @@ from modules import summonapi
 Create a file named ".env" and add your Summon API credentials as follows:
 ACCESS_ID=youraccessid
 API_KEY=yourapikey
-Ensure that this file is never committed to version control.
+Ensure that this file is never committed to version control. Or if you prefer,
+set ACCESS_ID and API_KEY environment variables and then remove dotenv lines
 '''
 load_dotenv('.env')
 access_id = os.environ['ACCESS_ID']

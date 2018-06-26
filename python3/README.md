@@ -8,7 +8,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-You must have Python 3 and pip installed. For [Windows](https://www.python.org/downloads/windows/), it is recommended to install the latest version or Python 3.4+ as pip is already included. If you must use an earlier version of Python 3 see [this guide](https://packaging.python.org/tutorials/installing-packages/#requirements-for-installing-packages) for installing pip.
+You must have Python 3 and pip installed. For Windows, it is recommended to install the [latest version of Python](https://www.python.org/downloads/windows/) or at least Python 3.4+ as pip is already included. If you must use an earlier version of Python 3 see [this guide](https://packaging.python.org/tutorials/installing-packages/#requirements-for-installing-packages) for installing pip.
 
 It is also recommended but not required to [create a virtual environment](https://packaging.python.org/tutorials/installing-packages/#creating-virtual-environments) to avoid causing problems with any other python packages you may have installed.
 
@@ -29,7 +29,7 @@ API_KEY=yourapikey
 
 Ensure that this file is never committed to version control to avoid compromising your credentials. If you do not have Summon API credentials, see [this article](https://knowledge.exlibrisgroup.com/Summon/Product_Documentation/Configuring_The_Summon_Service/Configurations_Outside_of_the_Summon_Administration_Console/Summon%3A_Using_the_Summon_API) for instructions on how to request them.
 
-3. Run app.py with 
+3. Run app.py with:
 ```
 python app.py
 ```
@@ -44,5 +44,5 @@ See "deployment" folder for notes on how to deploy the project on a live system.
 
 * [Flask](http://flask.pocoo.org) - Used as the web framework
 * [requests](http://docs.python-requests.org/en/master/) - Used to make the HTTP request to the Summon API
-* [dotenv](https://github.com/theskumar/python-dotenv) - Used to load the Summon API credentials into environment variables from file
+* [dotenv](https://github.com/theskumar/python-dotenv) - Used to load the Summon API credentials into environment variables from ".env" file. Avoids differences in setting environment variables between Windows, Mac and Linux environments.
 

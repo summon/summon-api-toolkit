@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-# see https://github.com/summon/summon-api-demo/tree/master/python2 for python2 version
 import base64
 import hashlib
 import hmac
