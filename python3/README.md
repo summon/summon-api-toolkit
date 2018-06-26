@@ -38,7 +38,7 @@ python app.py
 
 ## Deployment
 
-Add additional notes about how to deploy this on a live system
+See "deployment" folder for notes on how to deploy the project on a live system.
 
 ## Built With
 
