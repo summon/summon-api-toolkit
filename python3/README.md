@@ -1,4 +1,3 @@
-# summon-api-demo python3
 # Summon API Demo (Python 3)
 
 This is a demo implementation of the Summon API using Python 3 and Flask.
