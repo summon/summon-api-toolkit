@@ -20,6 +20,11 @@
       margin: 5px;
     }
 
+    .container {
+      padding-left: 0px;
+      padding-right: 0px;
+    }
+
     .string {
       color: #a6e22e;
     }
@@ -155,7 +160,39 @@
     <br> {% if error is defined %}
     <h4>{{ error }}</h4>
     {% endif %}
-    <pre><code id="json"></code></pre>
+
+    <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+                <div class="panel with-nav-tabs panel-default">
+                    <div class="panel-heading">
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a href="#tab1default" data-toggle="tab">Search Results</a></li>
+                                <li><a href="#tab2default" data-toggle="tab">JSON Response</a></li>
+                            </ul>
+                    </div>
+                    <div class="panel-body">
+                        <div class="tab-content">
+                            <div class="tab-pane fade in active" id="tab1default">
+                                <div class="container">                                
+                                    <section id="searchresults" class="col-xs-12 col-sm-6 col-md-12">
+                                    <!-- <article class="search-result row">
+                                      <div class="col-xs-12 col-sm-12 col-md-7">
+                                        <h3><a href="#" title="">Title</a></h3>
+                                        <p>Description</p>
+                                      </div>
+                                    </article> -->
+                                  </section>
+                                </div>
+                              </div>
+                            <div class="tab-pane fade" id="tab2default"><pre><code id="json"></code></pre></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+      </div>
+    </div>
+
   </div>
   <script src="//code.jquery.com/jquery-2.2.1.min.js"></script>
   <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
@@ -190,6 +227,19 @@
       console.log(data);
       var str = JSON.stringify(data, undefined, 4);
       $('#json').html(syntaxHighlight(str));
+
+      for (var i=0;i<data.documents.length;i++){
+        var result = data.documents[i];
+        var article = '<article class="search-result row">' +
+                     '<div class="col-xs-12 col-sm-12 col-md-7">' +
+                     '<h3><a href="' + result.link + '" target="_blank">' +
+                     [result.Title, result.Subtitle].join(' ') +'</a></h3>' +
+                     '<p>ID: ' + result.ID + '</p>' +
+                     '<p>' + (result.Abstract||result.ContentType) + '</p>' +
+                     '</div>' +
+                     '</article>';
+        $('#searchresults').append(article);
+      }
       {% endif %}
     </script>
 </body>

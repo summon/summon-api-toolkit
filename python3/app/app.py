@@ -4,6 +4,12 @@ from flask import Flask, render_template, request
 from modules import summonapi
 
 
+'''
+Create a file named ".env" and add your Summon API credentials as follows:
+ACCESS_ID=youraccessid
+API_KEY=yourapikey
+Ensure that this file is never committed to version control.
+'''
 load_dotenv('.env')
 access_id = os.environ['ACCESS_ID']
 api_key = os.environ['API_KEY']
