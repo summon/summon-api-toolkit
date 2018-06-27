@@ -4,7 +4,7 @@ This is a demo implementation of the Summon API using Python 3 and Flask.
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See Deployment for notes on how to deploy the project on a live system.
 
 ### Prerequisites
 
@@ -38,7 +38,7 @@ python app.py
 
 ## Deployment
 
-See "deployment" folder for notes on how to deploy the project on a live system.
+As Flask warns whenever the demo is run with the steps above, you should not use this option in a production environment. Two deployment options that have been successfully tested with this demo include using [nginx, gunicorn and supervisor on a Debian server](https://medium.com/ymedialabs-innovation/deploy-flask-app-with-nginx-using-gunicorn-and-supervisor-d7a93aa07c18) and this [Docker image](https://github.com/tiangolo/uwsgi-nginx-flask-docker), which requires some changes to the name and folder structure of the app.
 
 ## Built With
 
