@@ -48,7 +48,8 @@ function searchQuery(requestUrl){
 
 function processQuery(requestUrl){
     //sorts and decodes URL paramters
-    var query = requestUrl.slice(2);
+    //TODO: More comprehensive replacement, library?
+    var query = requestUrl.slice(2).replace(/\+/g,'%20').replace(/\%20\&/,'&');
     var splitQuery = query.split('&');
     var sortQuery = splitQuery.sort();
     var joinQuery = sortQuery.join('&');
