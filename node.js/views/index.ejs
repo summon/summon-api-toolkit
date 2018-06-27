@@ -53,7 +53,7 @@
 
     <!-- Form elements created with https://bootsnipp.com/forms -->
 
-    <form class="form-horizontal" role="form" method="POST" action="/">
+    <form class="form-horizontal" role="form">
       <fieldset>
 
         <!-- Form Name -->
@@ -157,9 +157,6 @@
         <button type="submit" class="btn btn-default">Search</button>
       </fieldset>
     </form>
-    <br> {% if error is defined %}
-    <h4>{{ error }}</h4>
-    {% endif %}
 
     <div class="container">
         <div class="row">
@@ -214,28 +211,27 @@
         });
       }
 
-      {% if response is defined %}
-      var data = JSON.parse({{ response|tojson|safe }});
-      // useful for exploring from browser developer tools
-      console.log('The Summon API response has been stored as the JSON object "data":');
-      console.log(data);
-      // populate JSON Response section
-      var str = JSON.stringify(data, undefined, 4);
-      $('#json').html(syntaxHighlight(str));
-      // populate Search Results section
-      for (var i=0;i<data.documents.length;i++){
-        var result = data.documents[i];
-        var article = '<article class="search-result row">' +
-                     '<div class="col-xs-12 col-sm-12 col-md-7">' +
-                     '<h3><a href="' + result.link + '" target="_blank">' +
-                     [result.Title, result.Subtitle].join(' ') +'</a></h3>' +
-                     '<p>ID: ' + result.ID + '</p>' +
-                     '<p>' + (result.Abstract||result.ContentType) + '</p>' +
-                     '</div>' +
-                     '</article>';
-        $('#searchresults').append(article);
+      var data = <%- response ? response : '' %>;
+      if (Object.keys(data).length !== 0 && data.constructor === Object){
+        console.log('The Summon API response has been stored as the JSON object "data":');
+        console.log(data);
+        // populate JSON Response section
+        var str = JSON.stringify(data, undefined, 4);
+        $('#json').html(syntaxHighlight(str));
+        // populate Search Results section
+        for (var i=0;i<data.documents.length;i++){
+          var result = data.documents[i];
+          var article = '<article class="search-result row">' +
+                      '<div class="col-xs-12 col-sm-12 col-md-7">' +
+                      '<h3><a href="' + result.link + '" target="_blank">' +
+                      [result.Title, result.Subtitle].join(' ') +'</a></h3>' +
+                      '<p>ID: ' + result.ID + '</p>' +
+                      '<p>' + (result.Abstract||result.ContentType) + '</p>' +
+                      '</div>' +
+                      '</article>';
+          $('#searchresults').append(article);
+        }
       }
-      {% endif %}
     </script>
 </body>
 

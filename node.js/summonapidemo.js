@@ -1,94 +1,63 @@
-console.log('test');
 var crypto = require('crypto');
-var http = require('http');
-var querystring = require('querystring');
-var url = require('url');
-var util = require('util');
-
-// Express + EJS skeleton
-// var express = require('express');
-
-// var app = express();
-// app.set('view engine', 'ejs');
-// app.get('/', function(req, res) {
-//     res.render('index');
-// });
-// app.listen(8080);
-// console.log('Server running at http://127.0.0.1:8080/');
-
-
-//add summon api credentials as string. TODO: replace with environment variables
+var request = require('request');
+// add summon api credentials as string. TODO: replace with environment variables
 var accessID;
 var key;
-
 var host = 'api.summon.serialssolutions.com';
+var path = '/2.0.0/search';
+var accept = 'application/json';
 
+var express = require('express');
+var app = express();
+app.set('view engine', 'ejs');
+app.get('/', function(req, res) {
+    var response = JSON.stringify(search(req.query));
+    res.render('index', {response: response});
+});
+app.listen(8080);
+console.log('Server running at http://127.0.0.1:8080/');
 
-http.createServer(function (request, response) {
-  util.log(request.method + ' http://' + request.headers.host + request.url);
-  var urlParts = url.parse(request.url);
-  var accept = 'application/json';
-  var date = (new Date()).toGMTString();
-  var path = '/2.0.0/search';
-  //TODO: Retrieve form parameters for query
-  var query = 's.q=test';
-
-  //TODO: Separate sections below into functions
-
-  var unQuery;
-  if (urlParts.query) {
-    var queryParts = urlParts.query.split('&');
-    var params = [];
-    for (var i = 0; i < queryParts.length; i++) {
-      var param = queryParts[i];
-      if (param && (param.indexOf('=') != -1)) {
-        param = param.replace('+', '%20');
-        params.push(param);
+function search(query){
+    var queryString = processQuery(query);
+    var date = (new Date()).toGMTString();
+    var headers = buildHeaders(accept, date, host, path, queryString, key, accessID);
+    var options = {
+        url: 'http://' + host + path + '?' + queryString,
+        method: 'GET',
+        headers: headers
       }
+    console.log(options);
+    
+    function callback(error, response, body) {
+        console.log('error:', error);
+        console.log('statusCode:', response && response.statusCode);
+        console.log('body:', body);
     }
-    params.sort();
-    query = params.join('&');
-    unQuery = querystring.unescape(query);
-  } else {
-    query = unQuery = '';
-  }
+    
+    request(options, callback);
+}
 
-  var idString = accept + '\n' + date + '\n' + host + '\n' + path + '\n' + unQuery + '\n';
-  var hmac = crypto.createHmac('sha1', key);
-  var hash = hmac.update(idString);
-  var digest = hash.digest('base64');
-  var headers = {
-    accept: accept,
-    'x-summon-date': date,
-    'Host': host,
-    'Authorization': 'Summon ' + accessID + ';' + digest
-  };
-
-
-  var options = {
-    hostname: host,
-    port: 80,
-    path: path,
-    method: 'GET',
-    headers: headers
-  }
-  var summonRequest = http.request(options);
-  summonRequest.end();
-  summonRequest.on('response', function(summonResponse) {
-    if (summonResponse.statusCode !== 200) {
-      response.writeHead(summonResponse.statusCode, 
-          {'Content-Type': 'text/html'});
-    } else {
-      response.writeHead(200, {'Content-Type': 'application/json'});
-    }
-    summonResponse.setEncoding('utf8');
-    summonResponse.on('data', function(chunk) {
-      response.write(chunk);
+function processQuery(query){
+    var ordered = {};
+    Object.keys(query).sort().forEach(function(key) {
+        ordered[key] = query[key];
     });
-    summonResponse.on('end', function() {
-      response.end();
-    });
-  });
-}).listen(8124);
+    var queryString = Object.keys(ordered).map(function(k) {
+        return encodeURIComponent(k) + '=' + encodeURIComponent(ordered[k])
+    }).join('&');
+    return queryString;
+}
 
-console.log('Server running at http://127.0.0.1:8124/');
+function buildHeaders(accept, date, host, path, queryString, key, accessID){
+    var idString = [accept, date, host, path, queryString, '\n'].join('\n');
+    var hmac = crypto.createHmac('sha1', key);
+    var hash = hmac.update(idString);
+    var digest = hash.digest('base64').replace('\n','');
+    var headers = {
+      'Accept': accept,
+      'x-summon-date': date,
+      'Host': host,
+      'Authorization': 'Summon ' + accessID + ';' + digest
+    };
+    return headers;
+}
