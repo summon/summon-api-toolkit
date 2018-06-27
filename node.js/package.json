@@ -11,8 +11,11 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"No tests available\" && exit 0"
   },
   "author": "Dominic Doneux",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "private": true
+  }
 }
