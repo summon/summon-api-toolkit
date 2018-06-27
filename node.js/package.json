@@ -4,6 +4,7 @@
   "description": "Summon API Demo (Node.js)",
   "main": "summonapidemo.js",
   "dependencies": {
+    "dotenv": "^6.0.0",
     "ejs": "^2.6.1",
     "express": "^4.16.3",
     "request": "^2.87.0"

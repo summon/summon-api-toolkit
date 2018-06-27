@@ -210,17 +210,16 @@
           return '<span class="' + cls + '">' + match + '</span>';
         });
       }
-
-      var data = <%- response ? response : '' %>;
-      if (Object.keys(data).length !== 0 && data.constructor === Object){
-        console.log('The Summon API response has been stored as the JSON object "data":');
-        console.log(data);
+      var results = <%- response ? response : '[]' %>;
+      if (results.length > 0){
+        console.log('The Summon API search results have been stored as the JSON object "results":');
+        console.log(results);
         // populate JSON Response section
-        var str = JSON.stringify(data, undefined, 4);
+        var str = JSON.stringify(results, undefined, 4);
         $('#json').html(syntaxHighlight(str));
         // populate Search Results section
-        for (var i=0;i<data.documents.length;i++){
-          var result = data.documents[i];
+        for (var i=0;i<results.length;i++){
+          var result = results[i];
           var article = '<article class="search-result row">' +
                       '<div class="col-xs-12 col-sm-12 col-md-7">' +
                       '<h3><a href="' + result.link + '" target="_blank">' +
