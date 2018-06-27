@@ -5,6 +5,18 @@ var querystring = require('querystring');
 var url = require('url');
 var util = require('util');
 
+// Express + EJS skeleton
+// var express = require('express');
+
+// var app = express();
+// app.set('view engine', 'ejs');
+// app.get('/', function(req, res) {
+//     res.render('index');
+// });
+// app.listen(8080);
+// console.log('Server running at http://127.0.0.1:8080/');
+
+
 //add summon api credentials as string. TODO: replace with environment variables
 var accessID;
 var key;
