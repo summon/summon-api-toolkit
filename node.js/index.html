@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Summon API Search</title>
+  <meta charset="UTF-8">
+  <meta name="description" content="A barebones implementation of the Summon API">
+  <meta name="author" content="Dominic Doneux">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" media="screen">
+  <style>
+    body {
+      background-color: #f8f8f2;
+    }
+
+    pre {
+      background-color: #272822;
+      color: #f8f8f2;
+      padding: 1px 5px;
+      margin: 5px;
+    }
+
+    .container {
+      padding-left: 0px;
+      padding-right: 0px;
+    }
+
+    .string {
+      color: #a6e22e;
+    }
+
+    .number {
+      color: #ae81ff;
+    }
+
+    .boolean {
+      color: #fd971f;
+    }
+
+    .null {
+      color: #66d9ef;
+    }
+
+    .key {
+      color: #f92672;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1></h1>
+
+    <!-- Form elements created with https://bootsnipp.com/forms -->
+
+    <form class="form-horizontal" role="form">
+      <fieldset>
+
+        <!-- Form Name -->
+        <legend>Summon API Demo</legend>
+
+        <!-- Search input-->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="searchinput">Text Query</label>
+          <div class="col-md-4">
+            <input id="searchinput" name="s.q" type="search" class="form-control input-md">
+            <p class="help-block"></p>
+            <a href="https://developers.exlibrisgroup.com/summon/apis/Search%20API/Query/Parameters/TextQuery" target="_blank">help</a>
+            </p>
+          </div>
+        </div>
+
+        <!-- Text input-->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="textinput-0">Page Size</label>
+          <div class="col-md-1">
+            <input id="textinput-0" name="s.ps" type="text" class="form-control input-md">
+            <span class="help-block">
+              <a href="https://developers.exlibrisgroup.com/summon/apis/Search%20API/Query/Parameters/PageSize" target="_blank">help</a>
+            </span>
+          </div>
+        </div>
+
+        <!-- Text input-->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="textinput2">Page Number</label>
+          <div class="col-md-1">
+            <input id="textinput2" name="s.pn" type="text" class="form-control input-md">
+            <span class="help-block">
+              <a href="https://developers.exlibrisgroup.com/summon/apis/Search%20API/Query/Parameters/PageNumber" target="_blank">help</a>
+            </span>
+          </div>
+        </div>
+
+        <!-- Multiple Checkboxes -->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="checkboxes">Search Options</label>
+          <div class="col-md-4">
+            <div class="checkbox">
+              <label for="checkboxes-0">
+                <input type="checkbox" name="s.debug" id="checkboxes-0" value="true"> Debug
+                <a href="https://developers.exlibrisgroup.com/summon/apis/Search%20API/Query/Parameters/Debug" target="_blank">help</a>
+              </label>
+            </div>
+            <div class="checkbox">
+              <label for="checkboxes-1">
+                <input type="checkbox" name="s.dym" id="checkboxes-1" value="true"> Did You Mean
+                <a href="https://developers.exlibrisgroup.com/summon/apis/Search%20API/Query/Parameters/DidYouMean"
+                  target="_blank">help</a>
+              </label>
+            </div>
+            <div class="checkbox">
+              <label for="checkboxes-2">
+                <input type="checkbox" name="s.ho" id="checkboxes-2" value="true"> Holdings Only
+                <a href="https://developers.exlibrisgroup.com/summon/apis/Search%20API/Query/Parameters/HoldingsOnly"
+                  target="_blank">help</a>
+              </label>
+            </div>
+            <div class="checkbox">
+              <label for="checkboxes-3">
+                <input type="checkbox" name="s.rec.jt" id="checkboxes-3" value="true"> Journal Title Recommendation
+                <a href="https://developers.exlibrisgroup.com/summon/apis/Search%20API/Query/Parameters/JournalTitleRecommendations"
+                  target="_blank">help</a>
+              </label>
+            </div>
+            <div class="checkbox">
+              <label for="checkboxes-4">
+                <input type="checkbox" name="s.light" id="checkboxes-4" value="true"> Light Weight Response
+                <a href="https://developers.exlibrisgroup.com/summon/apis/Search%20API/Query/Parameters/LightWeightResponse"
+                  target="_blank">help</a>
+              </label>
+            </div>
+            <div class="checkbox">
+              <label for="checkboxes-5">
+                <input type="checkbox" name="s.oaf" id="checkboxes-5" value="true"> Open access filter
+                <a href="https://developers.exlibrisgroup.com/summon/apis/Search%20API/Query/Parameters/open-access-filter"
+                  target="_blank">help</a>
+              </label>
+            </div>
+            <div class="checkbox">
+              <label for="checkboxes-6">
+                <input type="checkbox" name="s.exp" id="checkboxes-6" value="true"> Query expansion
+                <a href="https://developers.exlibrisgroup.com/summon/apis/Search%20API/Query/Parameters/QueryExpansion"
+                  target="_blank">help</a>
+              </label>
+            </div>
+            <div class="checkbox">
+              <label for="checkboxes-7">
+                <input type="checkbox" name="s.role" id="checkboxes-7" value="authenticated"> Role (show authenticated results)
+                <a href="https://developers.exlibrisgroup.com/summon/apis/Search%20API/Query/Parameters/Role"
+                  target="_blank">help</a>
+              </label>
+            </div>
+          </div>
+        </div>
+        <h6>To use other available <a href="https://developers.exlibrisgroup.com/summon/apis/Search%20API/Query/Parameters" target="_blank">Summon API search options</a>, add them as URL parameters: <a href="?s.ho=t&s.fvf=ContentType,Journal Article,false&s.fvf=Discipline,biology,false&s.l=en&s.q=(TitleCombined:(test))&s.oaf=t" target="_blank">Example</a></h6>
+        <button type="submit" class="btn btn-default">Search</button>
+      </fieldset>
+    </form>
+
+    <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+                <div class="panel with-nav-tabs panel-default">
+                    <div class="panel-heading">
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a href="#tab1default" data-toggle="tab">Search Results</a></li>
+                                <li><a href="#tab2default" data-toggle="tab">JSON Response</a></li>
+                            </ul>
+                    </div>
+                    <div class="panel-body">
+                        <div class="tab-content">
+                            <div class="tab-pane fade in active" id="tab1default">
+                                <div class="container">                                
+                                    <section id="searchresults" class="col-xs-12 col-sm-6 col-md-12">
+                                  </section>
+                                </div>
+                              </div>
+                            <div class="tab-pane fade" id="tab2default"><pre><code id="json"></code></pre></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+      </div>
+    </div>
+
+  </div>
+  <script src="http://code.jquery.com/jquery-2.2.1.min.js"></script>
+  <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script type=text/javascript>
+    // JSON syntax highlighting from https://stackoverflow.com/a/7220510
+    function syntaxHighlight(json) {
+      json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+        var cls = 'number';
+        if (/^"/.test(match)) {
+          if (/:$/.test(match)) {
+            cls = 'key';
+            }
+          else {
+            cls = 'string';
+            }
+          }
+        else if (/true|false/.test(match)) {
+          cls = 'boolean';
+          }
+        else if (/null/.test(match)) {
+          cls = 'null';
+          }
+        return '<span class="' + cls + '">' + match + '</span>';
+      });
+    }
+  //TODO: replace with templating or query node.js for json
+
+      // function getAllUrlParams() {
+      //   var queryString = window.location.search.slice(1);
+      //   var obj = {};
+      //   if (queryString) {
+      //     queryString = queryString.split('#')[0];
+      //     var arr = queryString.split('&');
+      //     for (var i=0; i<arr.length; i++) {
+      //       var a = arr[i].split('=');
+      //       var paramNum = undefined;
+      //       var paramName = a[0].replace(/\[\d*\]/, function(v) {
+      //         paramNum = v.slice(1,-1);
+      //         return '';
+      //       });
+      //       var paramValue = typeof(a[1])==='undefined' ? true : a[1];
+      //       paramName = paramName.toLowerCase();
+      //       paramValue = paramValue.toLowerCase();
+      //       if (obj[paramName]) {
+      //         if (typeof obj[paramName] === 'string') {
+      //           obj[paramName] = [obj[paramName]];
+      //         }
+      //         if (typeof paramNum === 'undefined') {
+      //           obj[paramName].push(paramValue);
+      //         }
+      //         else {
+      //           obj[paramName][paramNum] = paramValue;
+      //         }
+      //       }
+      //       else {
+      //         obj[paramName] = paramValue;
+      //       }
+      //     }
+      //   }
+      //   return obj;
+      //   }
+
+      // var params = getAllUrlParams();
+      // if (params){
+      //   search(window.location.search.slice(1));
+      // }
+
+      // {% if response is defined %}
+      // var data = JSON.parse({{ response|tojson|safe }});
+      // // useful for exploring from browser developer tools
+      // console.log('The Summon API response has been stored as the JSON object "data":');
+      // console.log(data);
+      // // populate JSON Response section
+      // var str = JSON.stringify(data, undefined, 4);
+      // $('#json').html(syntaxHighlight(str));
+      // // populate Search Results section
+      // for (var i=0;i<data.documents.length;i++){
+      //   var result = data.documents[i];
+      //   var article = '<article class="search-result row">' +
+      //                '<div class="col-xs-12 col-sm-12 col-md-7">' +
+      //                '<h3><a href="' + result.link + '" target="_blank">' +
+      //                [result.Title, result.Subtitle].join(' ') +'</a></h3>' +
+      //                '<p>ID: ' + result.ID + '</p>' +
+      //                '<p>' + (result.Abstract||result.ContentType) + '</p>' +
+      //                '</div>' +
+      //                '</article>';
+      //   $('#searchresults').append(article);
+      // }
+      // {% endif %}
+    </script>
+</body>
+
+</html>
