@@ -27,6 +27,7 @@ def search(access_id, api_key, params):
                                   path,
                                   query)
     response = requests.get(url, headers=headers)
+    response.raise_for_status()
     return response.text
 
 

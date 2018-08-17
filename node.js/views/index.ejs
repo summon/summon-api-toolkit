@@ -157,6 +157,11 @@
         <button type="submit" class="btn btn-default">Search</button>
       </fieldset>
     </form>
+    <br>
+
+    <% if (error && error.status) { %>
+    <h4><%= 'Error: ' + error.status + ', ' + error.message %></h4>
+    <% } %>
 
     <div class="container">
         <div class="row">
@@ -171,7 +176,7 @@
                     <div class="panel-body">
                         <div class="tab-content">
                             <div class="tab-pane fade in active" id="tab1default">
-                                <div class="container">                                
+                                <div class="container">
                                     <section id="searchresults" class="col-xs-12 col-sm-6 col-md-12">
                                   </section>
                                 </div>
@@ -210,26 +215,26 @@
           return '<span class="' + cls + '">' + match + '</span>';
         });
       }
-      var results = <%- response ? response : '[]' %>;
-      if (results.length > 0){
-        console.log('The Summon API search results have been stored as the JSON object "results":');
-        console.log(results);
+      var response = <%- response %>;
+      if (response.documents && response.documents.length > 0){
+        console.log('The Summon API search results have been stored as the JSON object "response":');
+        console.log(response);
         // populate JSON Response section
-        var str = JSON.stringify(results, undefined, 4);
+        var str = JSON.stringify(response, undefined, 4);
+        var docs = response.documents
         $('#json').html(syntaxHighlight(str));
         // populate Search Results section
-        for (var i=0;i<results.length;i++){
-          var result = results[i];
+        docs.forEach(function(doc){
           var article = '<article class="search-result row">' +
                       '<div class="col-xs-12 col-sm-12 col-md-7">' +
-                      '<h3><a href="' + result.link + '" target="_blank">' +
-                      [result.Title, result.Subtitle].join(' ') +'</a></h3>' +
-                      '<p>ID: ' + result.ID + '</p>' +
-                      '<p>' + (result.Abstract||result.ContentType) + '</p>' +
+                      '<h3><a href="' + doc.link + '" target="_blank">' +
+                      [doc.Title, doc.Subtitle].join(' ') +'</a></h3>' +
+                      '<p>ID: ' + doc.ID + '</p>' +
+                      '<p>' + (doc.Abstract || doc.ContentType) + '</p>' +
                       '</div>' +
                       '</article>';
           $('#searchresults').append(article);
-        }
+        });
       }
     </script>
 </body>
