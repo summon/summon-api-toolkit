@@ -20,10 +20,28 @@ app.get('/', function(req, res) {
     else{
         var query = searchQuery(req.url);
         request(query, function(err, response, body){
-            //renders template after JSON response is returned
-            //parsing problem with full JSON response so only documents are being rendered. TODO: resolve parsing problem
-            var docs = JSON.parse(body)['documents'];
-            res.render('index', {response: JSON.stringify(docs)});
+            var jsonResponse;
+            var error = {};
+
+            // catch errors that don't result in a valid JSON response
+            try {
+                jsonResponse = JSON.parse(body);
+            }
+            catch(SyntaxError) {
+                console.error(response.statusCode, response.statusMessage);
+            }
+
+            if (response.statusCode !== 200) {
+                error = {
+                    status: response.statusCode,
+                    message: jsonResponse ? jsonResponse.errors[0].message : response.statusMessage
+                }
+                res.render('index', {error: error, response: '{}'});
+                return;
+            }
+
+            // renders template after JSON response is returned
+            res.render('index', {error: error, response: body});
         });
     }
 });
@@ -40,9 +58,7 @@ function searchQuery(requestUrl){
         url: 'http://' + host + path + '?' + queryString,
         mode: 'GET',
         headers: headers
-      }
-    console.log(options);
-
+    }
     return options;
 }
 
@@ -70,7 +86,6 @@ function buildHeaders(accept, date, host, path, queryString, key, accessID){
     };
     return headers;
 }
-
 
 //TODO: Create test for digest
 // var idString = "application/xml" + "\n" + "Tue, 30 Jun 2009 12:10:24 GMT" + "\n" + "api.summon.serialssolutions.com" + "\n" + "/2.0.0/search" + "\n" + "ff=ContentType,or,1,15" + "&" + "q=forest" + "\n"
