@@ -15,7 +15,7 @@ var app = express();
 app.set('view engine', 'ejs');
 app.get('/', function(req, res) {
     if (Object.keys(req.query).length === 0){
-        res.render('index', {response: ''});
+        res.render('index', {error: {}, response: ''});
     }
     else{
         var query = searchQuery(req.url);
