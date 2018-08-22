@@ -12,8 +12,6 @@ The table below lists the available projects, as well as links to related projec
 | Ruby | https://github.com/tulibraries/blacklight_summon |
 
 
-Note that in order to use any of these projects, you will need to be a current Summon customer with valid API authentication credentials. If you do not already have these credentials, see the Ex Libris Knowledge Center article [here](https://knowledge.exlibrisgroup.com/Summon/Product_Documentation/Configuring_The_Summon_Service/Configurations_Outside_of_the_Summon_Administration_Console/Summon%3A_Using_the_Summon_API).
+Note that in order to use any of these projects, you will need to be a current Summon customer with valid API authentication credentials. If you do not already have these credentials, see the Ex Libris Knowledge Center article -- ["Summon: Using the Summon API"](https://knowledge.exlibrisgroup.com/Summon/Product_Documentation/Configuring_The_Summon_Service/Configurations_Outside_of_the_Summon_Administration_Console/Summon%3A_Using_the_Summon_API).
 
-For additional technical information on the Summon Search API, as well as code examples written in Java, see:
-
-https://developers.exlibrisgroup.com/summon/apis/Search%20API
+For additional technical information on the Summon Search API, as well as code examples written in Java, see the Ex Libris Developer Network article -- [Summon Search API](https://developers.exlibrisgroup.com/summon/apis/Search%20API)
